@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>JQuery</title>
+	<link href="css/custom.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+</head>
+
+<body>
+
+	<div id="wrapper">
+
+    <div id="menu">
+
+      <div id="logo">
+        <h1>Code Player</h1>
+      </div>
+
+      <div id="options">
+        <ul>
+          <li class="toggles selected">HTML</li>
+          <li class="toggles">CSS</li>
+          <li class="toggles">JS</li>
+          <li class="toggles selected" style="border-right: none;">Result</li>
+        </ul>
+      </div>  
+      <div id="buttonDiv">
+        <button id="runButton">Run</button>
+      </div> 
+
+    </div>
+
+    <div class="codeContainer" id="HTML">
+    	<div class="codeLabel">HTML</div>
+    	<textarea id="htmlCode"></textarea>
+    </div>
+
+    <div class="codeContainer" id="CSS">
+    	<div class="codeLabel">CSS</div>
+    	<textarea id="cssCode"></textarea>
+    </div>
+    
+    <div class="codeContainer" id="JS">
+    	<div class="codeLabel">JS</div>
+    	<textarea id="jsCode"></textarea>
+    </div>
+    
+    <div class="codeContainer" style="border-right: none" id="Result">
+    	<div class="codeLabel">Result</div>
+    	<iframe id="resultFrame"></iframe>
+    </div>
+
+  </div> 
+
+
+
+<script>
+
+	var windowHeight = $(window).height();
+
+	var menuBar = $("#menu").height();
+
+	var codeContainerHeight = windowHeight - menuBar;
+
+	$(".codeContainer").height(codeContainerHeight+"px");
+
+	$(".toggles").click(function(){
+
+		$(this).toggleClass("selected");
+
+		var activeDiv = $(this).html();
+
+		$("#"+activeDiv).toggle();
+
+		var showingDivs = $(".codeContainer").filter(function(){
+
+			return($(this).css("display")!= "none");
+
+		}).length;
+
+		var width = 100/showingDivs;
+
+		$(".codeContainer").css("width", width+"%");
+
+	});
+
+
+	$("#runButton").click(function(){
+
+		$("iframe").contents().find("html").html('<style>'+$("#cssCode").val()+'</style>'+$("#htmlCode").val());
+
+	}); 
+
+
+
+
+</script>
+
+
+<!-- JavaScript -->
+	
+</body>
+
+</html>
